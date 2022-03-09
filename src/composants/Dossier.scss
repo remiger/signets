@@ -1,0 +1,45 @@
+.Dossier {
+  position: relative;
+  width: 300px;
+  height: 350px;
+  margin: 10px;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .deplacer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: grab;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+    color: #ccc;
+    &:hover {
+      background-color: rgba($color: #000000, $alpha: 0.5);
+    }
+  }
+
+  .info {
+    padding: 1rem 0.75rem;
+    h2 {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+      font-family: Roboto Slab;
+    }
+  }
+
+  .modifier {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba($color: #333, $alpha: 0.4);
+    color: #ccc;
+    &:hover {
+      background-color: rgba($color: #333, $alpha: 0.5);
+    }
+  }
+}
