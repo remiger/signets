@@ -7,9 +7,9 @@ export default function ListeDossiers() {
     <ul className="ListeDossiers">
       {
         dossTab.map( 
-          // Remarquez l'utilisation du "spread operator" pour étaler les 
-          // propriété de l'objet dossier reçu en paramètre de la fonction
-          // fléchée dans les props du composant Dossier !!
+          // Remarquez l'utilisation du "spread operator" pour "étaler" les 
+          // propriétés de l'objet 'dossier' reçu en paramètre de la fonction
+          // fléchée dans les props du composant 'Dossier' !!
           dossier =>  <li key={dossier.id}><Dossier {...dossier} /></li>
         )
       }
