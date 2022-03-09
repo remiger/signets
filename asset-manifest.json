@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ex-1-2-solution/static/css/main.35c20a52.css",
+    "main.js": "/ex-1-2-solution/static/js/main.e47ae8d0.js",
+    "index.html": "/ex-1-2-solution/index.html",
+    "main.35c20a52.css.map": "/ex-1-2-solution/static/css/main.35c20a52.css.map",
+    "main.e47ae8d0.js.map": "/ex-1-2-solution/static/js/main.e47ae8d0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35c20a52.css",
+    "static/js/main.e47ae8d0.js"
+  ]
+}
