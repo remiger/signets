@@ -12,11 +12,16 @@ export function connexion(){
 
 
 /**
- * Ferme la connexion Firebase Auth
+ * Ferme la connexion Firebase Auth 
  */
 export function deconnexion(){
     authFirebase.signOut();
 }
+
+/**
+ * Observer la connexion Firebase Auth et mettre a jour letat 'utilisateur' a chaque changment detecte (par exemple connexion/deconnexion)
+ * @param {Function} mutateurEtatUtilisateur reference a la fonction 'setter' de l'etat utilisateur
+ */
 
 export function observerEtatConnexion(mutateurEtatUtilisateur){
     onAuthStateChanged(authFirebase, 

@@ -11,6 +11,9 @@ export default function Appli() {
   // Etat 'utilisateur'
   const [utilisateur, setUtilisateur] = useState(null);
 
+  // Etat des 'dossiers' de l'utilisateur connecte
+  const [dossiers, setDossiers] = useState([]);
+
   // Surveiller l'etat de la connexion Firebase Auth
   useEffect(() => observerEtatConnexion(setUtilisateur), []);
 
@@ -19,7 +22,9 @@ export default function Appli() {
       <div className="Appli">
           <Entete utilisateur={utilisateur}/>
           <section className="contenu-principal">
-            <ListeDossiers />
+            <ListeDossiers utilisateur={utilisateur} dossiers={dossiers} setDossiers={setDossiers} />
+            {/* Ajouter un composant FormDialog de MUI */}
+
             <Fab size="large" className="ajoutRessource" color="primary" aria-label="Ajouter dossier">
               <AddIcon />
             </Fab>
