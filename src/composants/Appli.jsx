@@ -35,7 +35,7 @@ export default function Appli() {
       couverture: couverture,
       couleur: couleur
     }).then(
-      doc => setDossiers([doc, ...dossiers])
+      doc => setDossiers([{id: doc.id, ...doc.data()}, ...dossiers])
     )
   }
 
