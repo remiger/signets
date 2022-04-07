@@ -9,7 +9,7 @@ export default function Entete({utilisateur}) {
       <nav>
         <div className="utilisateur">
           {utilisateur.displayName}
-          <Avatar className="avatar" alt={utilisateur.displayName} src={utilisateur.photoURL} />
+          <Avatar className="avatar" title={utilisateur.email} alt={utilisateur.displayName} src={utilisateur.photoURL} />
         </div>
         <div className="btn-deconnexion" onClick={deconnexion}>Déconnexion</div>
       </nav>

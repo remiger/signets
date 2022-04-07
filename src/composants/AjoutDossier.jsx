@@ -17,16 +17,20 @@ export default function AjoutDossier({ouvert, setOuvert, gererAjoutDossier}) {
     };
 
     const gererFermer = () => {
-        //   setTitre('');
-        //   setCouverture('');
-        //   setCouleur('');
+        // Il faut reinitialiser les etats des valeurs de formulaire car sinon
+        // les dernieres valeurs saisies seront sauvegardees dans les 'etats' du composant
+        setTitre('');
+        setCouverture('');
+        setCouleur('#000');
         setOuvert(false);
     };
 
     function gererSoumettre(){
         // Code qui gere l'ajout dans Firestore
-        gererAjoutDossier(titre, couverture, couleur);
-        gererFermer();
+        if(titre.search(/[a-z]{2,}/i) !== -1){
+          gererAjoutDossier(titre, couverture, couleur);
+          gererFermer();
+        }
     }
 
   return (
@@ -47,7 +51,6 @@ export default function AjoutDossier({ouvert, setOuvert, gererAjoutDossier}) {
             />
             {/* URL de l'image */}
             <TextField
-                autoFocus
                 margin="dense"
                 id="couverture"
                 label="Image couverture du dossier"
@@ -61,7 +64,7 @@ export default function AjoutDossier({ouvert, setOuvert, gererAjoutDossier}) {
             <TwitterPicker 
                 triangle='hide'
                 color={couleur}
-                colors={["#090", "#900", "#009"]}
+                colors={["#090", "#900", "#009", "orange", "pink", "beige", "cyan"]}
                 width="auto"
                 onChangeComplete={(couleur, evt) => setCouleur(couleur.hex)}
             />
