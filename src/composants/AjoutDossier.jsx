@@ -64,7 +64,7 @@ export default function AjoutDossier({ouvert, setOuvert, gererAjoutDossier}) {
             <TwitterPicker 
                 triangle='hide'
                 color={couleur}
-                colors={["#090", "#900", "#009", "orange", "pink", "beige", "cyan"]}
+                colors={["#090", "#900", "#009", "#880", "#F03", "#130", "#04B"]}
                 width="auto"
                 onChangeComplete={(couleur, evt) => setCouleur(couleur.hex)}
             />
