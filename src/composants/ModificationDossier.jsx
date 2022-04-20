@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { TwitterPicker } from 'react-color';
 import { useState } from 'react';
 
-export default function ModificationDossier({ouvert, setOuvert, gererModifierDossier, id_p, titre_p, couleur_p, couverture_p}) {
+export default function ModificationDossier({ouvert, setOuvert, modifierDossier, id, titre_p, couleur_p, couverture_p}) {
     const [titre, setTitre] = useState(titre_p);
     const [couverture, setCouverture] = useState(couverture_p);
     const [couleur, setCouleur] = useState(couleur_p);
@@ -19,29 +19,33 @@ export default function ModificationDossier({ouvert, setOuvert, gererModifierDos
     const gererFermer = () => {
         // Il faut reinitialiser les etats des valeurs de formulaire car sinon
         // les dernieres valeurs saisies seront sauvegardees dans les 'etats' du composant
-        setTitre('');
-        setCouverture('');
-        setCouleur('#000');
         setOuvert(false);
     };
 
+    const gererAnnuler = () => {
+      setTitre(titre_p);
+      setCouverture(couverture_p);
+      setCouleur(couleur_p);
+      gererFermer();
+    }
+
     function gererSoumettre(){
+        console.log("test");
         // Code qui gere l'ajout dans Firestore
         if(titre.search(/[a-z]{2,}/i) !== -1){
-          gererModifierDossier(titre, couverture, couleur);
+          modifierDossier(id, titre, couverture, couleur);
           gererFermer();
         }
     }
 
   return (
     <div>
-      <Dialog open={ouvert} onClose={gererFermer}>
+      <Dialog open={ouvert} onClose={gererAnnuler}>
         <DialogTitle>Modifier ce dossier</DialogTitle>
         <DialogContent>
             {/* Titre du dossier */}
             <TextField
                 autoFocus
-                value={titre}
                 margin="dense"
                 id="titre"
                 label="Titre du dossier"
@@ -49,6 +53,7 @@ export default function ModificationDossier({ouvert, setOuvert, gererModifierDos
                 fullWidth
                 variant="standard"
                 onChange={evt => setTitre(evt.target.value)}
+                value={titre}
             />
             {/* URL de l'image */}
             <TextField
@@ -60,6 +65,7 @@ export default function ModificationDossier({ouvert, setOuvert, gererModifierDos
                 variant="standard"
                 style={{marginBottom: "1.5rem"}}
                 onChange={evt => setCouverture(evt.target.value)}
+                value={couverture}
             />
             {/* Choix de couleur */}
             <TwitterPicker 
@@ -71,7 +77,7 @@ export default function ModificationDossier({ouvert, setOuvert, gererModifierDos
             />
         </DialogContent>
         <DialogActions>
-          <Button onClick={gererFermer}>Annuler</Button>
+          <Button onClick={gererAnnuler}>Annuler</Button>
           <Button onClick={gererSoumettre}>Soumettre</Button>
         </DialogActions>
       </Dialog>

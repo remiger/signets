@@ -27,6 +27,16 @@ export async function creer(idUtilisateur, dossier){
  * @returns {Promise<void>} Promesse contenant rien
  */
 export async function supprimer(uid, idDossier){
-    let refDoc = doc(bdFirestore, 'signets', uid, 'dossiers', idDossier);
+    const refDoc = doc(bdFirestore, 'signets', uid, 'dossiers', idDossier);
     return await deleteDoc(refDoc);
+}
+
+/**
+ * Modifier les proprietes d'un dossier pour l'utilisateur connecte
+ * 
+ */
+export async function modifier(uid, idDossier, objetModif){
+    objetModif.dateModif = Timestamp.now();
+    const docRef = doc(bdFirestore, "signets", uid, "dossiers", idDossier);
+    return await updateDoc(docRef, objetModif);
 }
