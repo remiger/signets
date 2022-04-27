@@ -7,7 +7,16 @@
   cursor: pointer;
   overflow: hidden;
 
+  &.dropzone{
+    box-shadow: 0 0 10px 5px rgba(27, 40, 221, 0.9);
+
+    .deplacer, .modifier{
+      pointer-events: none;
+    }
+  }
+
   .couverture{
+    pointer-events: none;
     height: 200px;
     img {
       width: 300px;
@@ -29,6 +38,7 @@
   }
 
   .info {
+    pointer-events: none;
     padding: 1rem 0.75rem;
     h2 {
       margin: 0;

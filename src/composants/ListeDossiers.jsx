@@ -1,6 +1,6 @@
 import './ListeDossiers.scss';
 import Dossier from './Dossier';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as dossierModele from '../code/dossier-modele';
 
 export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
@@ -45,6 +45,10 @@ export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
     );
   }
 
+  function ajouterSignet(idDossier, url){
+    
+  }
+
   return (
     <ul className="ListeDossiers">
       {
@@ -52,7 +56,7 @@ export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
           // Remarquez l'utilisation du "spread operator" pour "étaler" les 
           // propriétés de l'objet 'dossier' reçu en paramètre de la fonction
           // fléchée dans les props du composant 'Dossier' !!
-          dossier =>  <li key={dossier.id}><Dossier {...dossier} modifierDossier={modifierDossier} supprimerDossier={supprimerDossier} /></li>
+          dossier =>  <li key={dossier.id}><Dossier {...dossier} modifierDossier={modifierDossier} supprimerDossier={supprimerDossier} ajouterSignet={ajouterSignet} /></li>
         )
       }
     </ul>

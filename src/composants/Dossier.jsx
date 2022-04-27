@@ -1,5 +1,5 @@
 import './Dossier.scss'; 
-import ModificationDossier from './ModificationDossier';
+import FrmDossier from './FrmDossier';
 import IconButton from '@mui/material/IconButton';
 import SortIcon from '@mui/icons-material/Sort';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -9,7 +9,7 @@ import couvertureDefaut from '../images/couverture-defaut.jpg';
 import { formaterDate } from '../code/helper';
 import { useState } from 'react';
 
-export default function Dossier({id, titre, couleur, dateModif, couverture, supprimerDossier, modifierDossier}) {
+export default function Dossier({id, titre, couleur, dateModif, couverture, supprimerDossier, modifierDossier, ajouterSignet}) {
   // Etat du menu contextuel
   const [eltAncrage, setEltAncrage] = useState(null);
   const ouvertMenu = Boolean(eltAncrage);
@@ -26,7 +26,7 @@ export default function Dossier({id, titre, couleur, dateModif, couverture, supp
     setEltAncrage(null);
   };
 
-  function gererFormulaireModifier(){
+  function afficherFormulaireDossier(){
     // Ouvrir le formulaire de modification du dossier
     setOuvertFrm(true);
 
@@ -51,14 +51,40 @@ export default function Dossier({id, titre, couleur, dateModif, couverture, supp
     couverture = couvertureDefaut;
   }
 
+  // Etat dropzone
+  const [dropzone, setDropzone] = useState(false);
+
+  function gererDragEnter(evt){
+    evt.preventDefault();
+    setDropzone(true);
+  }
+
+  function gererDragLeave(){
+    setDropzone(false);
+  }
+
+  function gererDragOver(evt){
+    evt.preventDefault();
+  }
+
+  function gererDrop(evt){
+    evt.preventDefault();
+    setDropzone(false);
+    let url = evt.dataTransfer.getData("URL");
+    // on aimerait aussi chercher le TITLE
+
+    // on appelle la methode dajout dun signet dans un dossier definie 
+    // dans le composant parent et passee ici en props
+    // elle prend 2 arguments: id du dossier et chaine de lurl deposee
+    ajouterSignet(id, url);
+  }
+
   return (
-    // Remarquez l'objet JS donné à la valeur de l'attribut style en JSX, voir : 
-    // https://reactjs.org/docs/dom-elements.html#style
-    <article className="Dossier" style={{backgroundColor: couleur}}>
-      <div className="couverture">
-        <IconButton className="deplacer" aria-label="déplacer" disableRipple={true}>
+    <article className={"Dossier" + (dropzone ? ' dropzone' : '')} onDrop={gererDrop}  onDragEnter={gererDragEnter} onDragOver={gererDragOver} onDragLeave={gererDragLeave} style={{backgroundColor: couleur}}>
+      <IconButton className="deplacer" aria-label="déplacer" disableRipple={true}>
           <SortIcon />
         </IconButton>
+      <div className="couverture">
         <img src={couverture} alt={titre}/>
       </div>
       <div className="info">
@@ -82,10 +108,10 @@ export default function Dossier({id, titre, couleur, dateModif, couverture, supp
           horizontal: 'right',
         }}
       >
-        <MenuItem onClick={gererFormulaireModifier}>Modifier</MenuItem>
+        <MenuItem onClick={afficherFormulaireDossier}>Modifier</MenuItem>
         <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
       </Menu>
-      <ModificationDossier modifierDossier={modifierDossier} ouvert={ouvertFrm} setOuvert={setOuvertFrm} id={id} titre_p={titre} couleur_p={couleur} couverture_p={couverture} />
+      <FrmDossier gererActionDossier={modifierDossier} ouvert={ouvertFrm} setOuvert={setOuvertFrm} id={id} titre_p={titre} couleur_p={couleur} couverture_p={couverture} />
     </article>
   );
 }
