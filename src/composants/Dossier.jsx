@@ -7,9 +7,17 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import couvertureDefaut from '../images/couverture-defaut.jpg';
 import { formaterDate } from '../code/helper';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import * as signetModele from '../code/signet-modele';
+import { UtilisateurContext } from './Appli';
 
-export default function Dossier({id, titre, couleur, dateModif, couverture, supprimerDossier, modifierDossier, ajouterSignet}) {
+export default function Dossier({id, titre, couleur, dateModif, couverture, top3, supprimerDossier, modifierDossier, ajouterSignet}) {
+  // Identifiant de l'utilisateur
+  const uid = useContext(UtilisateurContext).uid;
+
+  // Etat des signets dans ce dossier
+  const [signets, setSignets] = useState(top3 || []);
+
   // Etat du menu contextuel
   const [eltAncrage, setEltAncrage] = useState(null);
   const ouvertMenu = Boolean(eltAncrage);
@@ -55,6 +63,9 @@ export default function Dossier({id, titre, couleur, dateModif, couverture, supp
   const [dropzone, setDropzone] = useState(false);
 
   function gererDragEnter(evt){
+    // TODO limiter aux liens
+    evt.dataTransfer.effectAllowed = 'link';
+
     evt.preventDefault();
     setDropzone(true);
   }
@@ -77,6 +88,13 @@ export default function Dossier({id, titre, couleur, dateModif, couverture, supp
     // dans le composant parent et passee ici en props
     // elle prend 2 arguments: id du dossier et chaine de lurl deposee
     ajouterSignet(id, url);
+  }
+
+  function ajouterSignet(idDossier, url){
+    const derniers3 = [...signets, {url: url, titre: 'bla'}].slice(-3);
+    signetModele.creer(uid, idDossier, derniers3).then(
+      () => setSignets(derniers3)
+    );
   }
 
   return (

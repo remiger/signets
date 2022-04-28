@@ -1,10 +1,13 @@
 import './ListeDossiers.scss';
 import Dossier from './Dossier';
-import { useEffect } from 'react';
+import { UtilisateurContext } from './Appli';
+import { useEffect, useContext } from 'react';
 import * as dossierModele from '../code/dossier-modele';
 
-export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
-  
+export default function ListeDossiers({dossiers, setDossiers}) {
+  // Lire la variable globale UtilisateurContext
+  const utilisateur = useContext(UtilisateurContext);
+
   // Lire les dossiers de lutilisateur connecte dans Firestore
   useEffect(
     () => dossierModele.lireTout(utilisateur.uid).then(
@@ -45,10 +48,6 @@ export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
     );
   }
 
-  function ajouterSignet(idDossier, url){
-    
-  }
-
   return (
     <ul className="ListeDossiers">
       {
@@ -56,7 +55,7 @@ export default function ListeDossiers({utilisateur, dossiers, setDossiers}) {
           // Remarquez l'utilisation du "spread operator" pour "étaler" les 
           // propriétés de l'objet 'dossier' reçu en paramètre de la fonction
           // fléchée dans les props du composant 'Dossier' !!
-          dossier =>  <li key={dossier.id}><Dossier {...dossier} modifierDossier={modifierDossier} supprimerDossier={supprimerDossier} ajouterSignet={ajouterSignet} /></li>
+          dossier =>  <li key={dossier.id}><Dossier {...dossier} modifierDossier={modifierDossier} supprimerDossier={supprimerDossier} /></li>
         )
       }
     </ul>
