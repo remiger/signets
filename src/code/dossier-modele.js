@@ -7,7 +7,8 @@ import { getDocs, query, orderBy, collection, addDoc, Timestamp, getDoc, deleteD
  * @returns {Promise<any[]>} Promesse avec le tableau des dossiers lorsque complete
  */
 export async function lireTout(idUtilisateur){
-    return getDocs(query(collection(bdFirestore, 'signets', idUtilisateur, 'dossiers'), orderBy("dateModif", "desc"))).then(
+    return getDocs(query(collection(bdFirestore, 'signets', idUtilisateur, 'dossiers'),
+     orderBy("dateModif", "desc"), orderBy("titre", "asc"))).then(
         res => res.docs.map(doc => ({id: doc.id, ...doc.data()}))        
     )
 }
